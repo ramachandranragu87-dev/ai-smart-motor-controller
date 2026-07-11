@@ -11,7 +11,8 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const handleLogin = () => {
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault(); // Prevents the page from reloading on form submit
     setError("");
 
     if (!username || !password) {
@@ -33,14 +34,10 @@ export default function LoginPage() {
 
   return (
     <div className="login-page">
-
       <div className="background-animation"></div>
 
       <div className="login-card">
-
-        <div className="logo-circle">
-          🤖
-        </div>
+        <div className="logo-circle">🤖</div>
 
         <h1>AI Smart Motor Controller</h1>
 
@@ -48,73 +45,61 @@ export default function LoginPage() {
           Intelligent Industrial Monitoring System
         </p>
 
-        <div className="input-group">
-          <label>Username</label>
-
-          <input
-            type="text"
-            placeholder="Enter Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </div>
-
-        <div className="input-group">
-
-          <label>Password</label>
-
-          <div className="password-box">
-
+        {/* Wrapped inputs in a form component */}
+        <form onSubmit={handleLogin}>
+          <div className="input-group">
+            <label>Username</label>
             <input
-              type={showPassword ? "text" : "password"}
-              placeholder="Enter Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              type="text"
+              placeholder="Enter Username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
             />
-
-            <button
-              className="eye-btn"
-              onClick={() => setShowPassword(!showPassword)}
-            >
-              {showPassword ? "🙈" : "👁"}
-            </button>
-
           </div>
 
-        </div>
+          <div className="input-group">
+            <label>Password</label>
+            <div className="password-box">
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="Enter Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              {/* Added type="button" so it doesn't break your inputs or trigger a reload */}
+              <button
+                type="button" 
+                className="eye-btn"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? "🙈" : "👁"}
+              </button>
+            </div>
+          </div>
 
-        <div className="options">
+          <div className="options">
+            <label>
+              <input type="checkbox" />
+              Remember Me
+            </label>
+            <span className="forgot">Forgot Password?</span>
+          </div>
 
-          <label>
+          {error && <p className="error">{error}</p>}
 
-            <input type="checkbox" />
-
-            Remember Me
-
-          </label>
-
-          <span className="forgot">
-            Forgot Password?
-          </span>
-
-        </div>
-
-        {error && <p className="error">{error}</p>}
-
-        <button
-          className="login-btn"
-          onClick={handleLogin}
-          disabled={loading}
-        >
-          {loading ? "Connecting..." : "Login"}
-        </button>
+          <button
+            type="submit"
+            className="login-btn"
+            disabled={loading}
+          >
+            {loading ? "Connecting..." : "Login"}
+          </button>
+        </form>
 
         <div className="footer">
           AI Powered Monitoring • Secure Access
         </div>
-
       </div>
-
     </div>
   );
 }
