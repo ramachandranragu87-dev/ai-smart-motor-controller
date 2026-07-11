@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./SensorPage.css";
+import "./sensorpage.css";
 
 export default function SensorPage() {
 

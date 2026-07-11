@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./MotorStatus.css";
+import "./motorstatus.css";
 
 export default function MotorStatus() {
   const navigate = useNavigate();
